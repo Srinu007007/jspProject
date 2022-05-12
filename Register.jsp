@@ -1,4 +1,4 @@
-<!-- Register.jsp html code here -->
+<!-- Registration.jsp page-->
 
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -12,7 +12,13 @@
 <body>
  <center>
  <h3>Register here</h3>
+ 
+	 
+	 <!-- using registration creater or not and using javascript validation also -->
+ <input type="hidden" id="status" value="<%= request.getAttribute("status") %>">
+	 
  <form action="register" method="post">
+	 
  <input type="text" name="name" placeholder="Enter your name" value=""><br>
  <input type="email" name="email" placeholder="Enter your E-mail" value=""><br>
  <input type="text" name="username" placeholder="Enter your Username" value=""><br>
@@ -21,21 +27,30 @@
  <input type="submit" value="Register" name="Register"><br>
  <br>
  
+ </form>
  <p>Do you have an account </p><a href="login.jsp">Login here......</a>
  
- 
- 
- 
- </form>
- 
- 
  </center>
+	
+ <!-- registration validation  -->
+ <script>
+  
+ var status= document.getElementById("status").value;
+ 
+ if(status=="sucess")
+	 {
+	 alert("Your Registration Successfully");
+	 }
+ 
+ </script>
+	
 </body>
 </html>
 
 
-----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 -> right click on "src/main/java"
@@ -46,10 +61,10 @@
 -> and type the class name "RegistartionServelt"
 -> click on ok button.
 
-
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 open RegistartionServerlt.java 
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 package com.uniquedeveloper.registration;
 
@@ -70,42 +85,54 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class RegistartionServlet
  */
-@WebServlet("/register") // here html lo action name same ga undali 
+@WebServlet("/register")//here register name should be same to from action name also 
 public class RegistartionServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
   
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String name=request.getParameter("name");//here html lo unnanaa name same ga undali
+
+/* assigning values to the java code using request.getParameter() method here paramater should be same to html <input> tag "name" same
+
+		String name=request.getParameter("name");
 		String email=request.getParameter("email");
 		String username=request.getParameter("username");
 	    String pwd=request.getParameter("pwd");
+
+     //RequestDispatcher class used to move to one jsp page to another page
+
 	    RequestDispatcher dispatcher=null;
-	    Connection con=null;//connection var
+    //Connection class  used to connect to mysql database
+	    Connection con=null;
 	    try
 	    {
-	    	Class.forName("com.mysql.cj.jdbc.Driver");//driver open 
-	    	 con= DriverManager.getConnection("jdbc:mysql://localhost:3306/users","root","1234");  //connection with mysql database name = users and server name="root" and password="1234"
-	    	PreparedStatement pst= con.prepareStatement("insert into users(name,email,username,password)values(?,?,?,?)");//table insert querty
-        //passing values here
-        pst.setString(1, name);
+	    	Class.forName("com.mysql.cj.jdbc.Driver");  // driver name
+
+                //here users is a database name and server name is root and and password is 1234 and server port number 3036
+	    	 con= DriverManager.getConnection("jdbc:mysql://localhost:3306/users?useSSL=false","root","1234");
+
+//here PreparedStatement class used to querey 
+	    	PreparedStatement pst= con.prepareStatement("insert into users(name,email,username,password)values(?,?,?,?)");
+	    	pst.setString(1, name);
 	    	pst.setString(2, email);
 	    	pst.setString(3, username);
 	    	pst.setString(4, pwd);
 	    	
-	    	//row count excuteupadate method
+//excuteUpdate() method used to query excute	
+
 	    	int rowcount=pst.executeUpdate();
-       
-	    	dispatcher=request.getRequestDispatcher("Register.jsp");  //after excute code and query and move to next jsp page
-	    	if(rowcount>0)//checking query
+
+//moving one jsp page to another jsp page
+	    	dispatcher=request.getRequestDispatcher("Register.jsp");
+	    	if(rowcount>0)
 	    	{
-	    		request.setAttribute("status","sucess");
+	    		request.setAttribute("status","sucess"); //moving value in html page using status
 	    		
 	    	}
 	    	else {
-	    		request.setAttribute("status","falied");
+	    		request.setAttribute("status","falied");  //moving value in html page using status
 	    	}
-	    	dispatcher.forward(request, response);//moving page 
+	    	dispatcher.forward(request, response);
 	    }
 	    catch(Exception e) {
 	    	
@@ -124,3 +151,4 @@ public class RegistartionServlet extends HttpServlet {
 	}
 
 }
+
