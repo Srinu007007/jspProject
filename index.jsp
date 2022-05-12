@@ -18,7 +18,7 @@
 </head>
 <body>
 
-	<!-- here href="logout" using session close and logout the page also logout name used to logout.jsp page-->
+	<!-- here href="logout" using session close and logout the page also logout name used to logout.java page-->
 <a href="logout"> Logout </a>
 <h1>
 
