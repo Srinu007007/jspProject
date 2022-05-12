@@ -1,24 +1,15 @@
- 
- /**
- login ayyindhaa ledhaa check cheyadaniki oka vela login avvakapothee register page loki move avvachuuu
- 
- 
- 
- **/
- 
- 
- 
- 
- <%
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+
+
+<!-- session variable creation and check sessioon creater or not -->
+    <%
    if(session.getAttribute("name")==null){
-	   response.sendRedirect("Register.jsp");
+	   response.sendRedirect("login.jsp");
    }
     
     
     %>
-
-
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,8 +17,20 @@
 <title>Insert title here</title>
 </head>
 <body>
+
+	<!-- here href="logout" using session close and logout the page also logout name used to logout.jsp page-->
+<a href="logout"> Logout </a>
 <h1>
-<CENTER><b>HOME PAGE</b></CENTER>
-</h1>
+
+<CENTER><b>HOME PAGE</b></h1>
+<!--   calling backend values using sessions-->
+<b> <%= session.getAttribute("name") %>  </b>
+
+</CENTER>
+
+
+
+
+
 </body>
 </html>
